@@ -12,12 +12,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install MinGW
+      - name: Install MinGW and set PATH
         run: |
           choco install mingw -y
-          echo "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin" >> $GITHUB_PATH
+          setx PATH "%PATH%;C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin"
 
       - name: Compile launcher.cpp
+        shell: cmd
         run: g++ launcher.cpp -o launcher.exe
 
       - name: Upload launcher.exe
